@@ -4,6 +4,7 @@ __build__ = 0x000006
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('ImagesSitemap', 'StaticSitemap', 'RelAlternateHreflangSitemap',)
 
+import re
 import datetime
 
 from six import PY3
@@ -380,7 +381,8 @@ class RelAlternateHreflangSitemap(Sitemap):
                 output += REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE.format(
                     **{'lang': hreflang[0], 'href': hreflang[1]}
                     )
-        return output
+        return re.sub(r'\s{2,}', ' ', output)
+
 
     def get_urls(self, page=1, site=None, protocol=None):
         # Determine protocol
